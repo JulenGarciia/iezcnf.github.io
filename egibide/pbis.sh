@@ -13,23 +13,21 @@ if [ "$?" -eq "0" ]; then
 
 grep -o 1 $tmpfile > /dev/null 2>&1
     if [ "$?" -eq "0" ]; then
-	resultdns=`[ "$(dig +short -t a grupo6.local)" ] && echo "responde"`
-	if ["$resultdns" -eq "responde"]; then
+	
       clear
-      bash <(wget -O - 'https://github.com/BeyondTrust/pbis-open/releases/download/9.1.0/pbis-open-9.1.0.551.linux.x86_64.deb.sh')
-      clearu78
+      wget https://github.com/BeyondTrust/pbis-open/releases/download/9.1.0/pbis-open-9.1.0.551.linux.x86_64.deb.sh
+      bash pbis-open-9.1.0.551.linux.x86_64.deb.sh
+      clear
 	  cd /opt/pbis/bin/
 	  echo "Introduce contraseña de el usuario Administrador"
 	  read Contrasena
 	  /opt/pbis/bin/domainjoin-cli join grupo6.local Administrador $Contrasena
-      clear
 	  /opt/pbis/bin/domainjoin-cli query
-	  echo 'greeter-show-manual-login=true' >> /usr/share/lightdm.conf.d/50-ubuntu.conf
+	  echo 'greeter-show-manual-login=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 	  clear
 	  /opt/pbis/bin/config LoginShellTemplate /bin/bash
+	  /opt/pbis/bin/config AssumeDefaultDomain true
       Script
-	  fi
-	  echo 'La red no esta configurada de manera correcta, comprueba el servidor DNS'
     fi
 
 grep -o 2 $tmpfile > /dev/null 2>&1
@@ -45,6 +43,7 @@ else
 fi
 }
 apt update
-apt install dialog -y
+apt install dialog ssh -y
+apt remove avahi-daemon -y
 clear
 Script
