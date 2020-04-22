@@ -19,15 +19,12 @@ grep -o 1 $tmpfile > /dev/null 2>&1
       bash pbis-open-9.1.0.551.linux.x86_64.deb.sh
       clear
 	  cd /opt/pbis/bin/
-	  echo "Introduce contraseña de el usuario Administrador"
-	  read Contrasena
-	  /opt/pbis/bin/domainjoin-cli join grupo6.local Administrador $Contrasena
+	  /opt/pbis/bin/domainjoin-cli join grupo6.local Administrador
 	  /opt/pbis/bin/domainjoin-cli query
 	  echo 'greeter-show-manual-login=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-	  clear
 	  /opt/pbis/bin/config LoginShellTemplate /bin/bash
 	  /opt/pbis/bin/config AssumeDefaultDomain true
-      Script
+      
     fi
 
 grep -o 2 $tmpfile > /dev/null 2>&1
